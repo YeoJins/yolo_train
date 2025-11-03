@@ -1,0 +1,14 @@
+train: /data/CRK/new_dataset/train_model/7subset_/train
+val: /data/CRK/new_dataset/train_model/7subset_/val
+test: 
+nc: 8
+names:
+- hand
+- chickenmayo
+- seaweed_soup
+- condition_stick
+- pepero_original
+- pulmuone_spring_water
+- samdasoo
+- creeat_protein_bar
+
