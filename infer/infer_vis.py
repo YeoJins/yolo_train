@@ -45,12 +45,7 @@ if MODE == 'video':
 else:
     OUTPUT_PATH = output_dir / f"{source_name}_result.jpg"
 
-# cam_2가 포함된 경우만 화면 상단 절반 필터링 적용
-USE_TOP_FILTER = 'cam_2' in source_name.lower()
-if USE_TOP_FILTER:
-    print(f"✓ 'cam_2' 감지: 화면 상단 절반만 필터링합니다.")
-else:
-    print(f"✓ 'cam_2' 미감지: 전체 화면을 감지합니다.")
+print("✓ 전체 화면을 감지합니다.")
 
 CLASS_DICT = {
     0: 'hand', 1: 'chickenmayo', 2: 'seaweed_soup', 3: 'condition_stick',
@@ -135,16 +130,13 @@ if MODE == 'video':
     frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
     frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
     fps = cap.get(cv2.CAP_PROP_FPS)
-    midpoint_y = frame_height / 2 if USE_TOP_FILTER else None
+    midpoint_y = None
     
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
     out = cv2.VideoWriter(str(OUTPUT_PATH), fourcc, fps, (frame_width, frame_height))
     
     print(f"비디오 처리 시작... (해상도: {frame_width}x{frame_height}, FPS: {fps:.2f})")
-    if USE_TOP_FILTER:
-        print(f"필터링 기준 Y좌표: {midpoint_y} (화면 상단 절반만 감지)\n")
-    else:
-        print(f"필터링 없음 (전체 화면 감지)\n")
+    print("필터링 없음 (전체 화면 감지)\n")
     print("--- 감지 로그 ---")
     
     frame_count = 0
@@ -184,13 +176,10 @@ else:
         exit()
     
     frame_height = frame.shape[0]
-    midpoint_y = frame_height / 2 if USE_TOP_FILTER else None
+    midpoint_y = None
     
     print(f"이미지 처리 시작... (해상도: {frame.shape[1]}x{frame.shape[0]})")
-    if USE_TOP_FILTER:
-        print(f"필터링 기준 Y좌표: {midpoint_y} (화면 상단 절반만 감지)\n")
-    else:
-        print(f"필터링 없음 (전체 화면 감지)\n")
+    print("필터링 없음 (전체 화면 감지)\n")
     
     results = model(frame, conf=CONF_THRESHOLD, verbose=False)
     

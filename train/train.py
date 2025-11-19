@@ -27,7 +27,8 @@ hsv_s = config.get('hsv_s', 0.7)
 hsv_v = config.get('hsv_v', 0.4)
 dropout = config.get('dropout', 0.2)
 mixup = config.get('mixup', 0.1)
-auto_name = f"{date_str}_yolov8n_ep{epochs}_hsv-s{hsv_s}_hsv-v{hsv_v}_dropout{dropout}_mixup{mixup}"
+mosaic = config.get('mosaic', 0.5)
+auto_name = f"{date_str}_yolov11n_ep{epochs}_hsv-s{hsv_s}_hsv-v{hsv_v}_dropout{dropout}_mixup{mixup}_mosaic{mosaic}"
 config['name'] = auto_name
 print(f'Auto-generated experiment name: {auto_name}')
 
@@ -63,6 +64,7 @@ train_params = {
     'mixup': config.get('mixup', 0.0),
     'copy_paste': config.get('copy_paste', 0.0),
     'dropout': config.get('dropout', 0.2),
+    'auto_augment': None, # auto_augment 끄기
 }
 
 # Advanced parameters (optional)

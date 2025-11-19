@@ -8,6 +8,7 @@ import cv2
 import numpy as np
 import time
 import argparse
+from pathlib import Path
 
 # --- 1. 기본 설정 ---
 
@@ -20,7 +21,13 @@ CLASS_NAMES = {
     4: 'pepero_original',
     5: 'pulmuone_spring_water',
     6: 'samdasoo', 
-    7: 'creeat_protein_bar'
+    7: 'creeat_protein_bar',
+    8: 'hotbar',
+    9: 'egg',   
+    10: 'protein_shake',
+    11: 'vita500',
+    12: 'pizza_combination',
+    13: 'protein_hatban',
 }
 
 # (B, G, R) 포맷의 클래스별 색상 (시각화용)
@@ -49,12 +56,12 @@ def parse_arguments():
     
     parser.add_argument('--model', type=str, required=True,
                         help='모델 경로 (.pt 파일)')
-    parser.add_argument('--test-dir', type=str, default='/data/CRK/new_dataset/train_model/7subset_/test',
+    parser.add_argument('--test-dir', type=str, default='/data/CRK/new_dataset/train_model/13subset_/test/13_topview',
                         help='테스트 데이터셋 폴더 (images/, labels/ 포함)')
     parser.add_argument('--project', type=str, default='/home/yeojin/yolo_train/runs/infer',
                         help='예측 결과를 저장할 상위 폴더 (default: /home/yeojin/yolo_train/runs/infer)')
-    parser.add_argument('--name', type=str, default='grab_mid_pred_i0.5_hsv-s0.2_hsv-v0.25',
-                        help='예측 결과를 저장할 하위 폴더 이름 (default: exp)')
+    parser.add_argument('--name', type=str, default=None,
+                        help='예측 결과를 저장할 하위 폴더 이름 (default: 모델 경로에서 자동 추출)')
     parser.add_argument('--vis-name', type=str, default='grab_mid_vis',
                         help='비교 이미지 저장 폴더 이름 (default: grab_mid_vis)')
     parser.add_argument('--iou-threshold', type=float, default=0.5,
@@ -428,6 +435,14 @@ def run_evaluation_and_visualization(model_path, test_dir, project_dir, name_dir
 # --- 스크립트 실행 ---
 if __name__ == "__main__":
     args = parse_arguments()
+    
+    # name이 지정되지 않았으면 모델 경로에서 자동 추출
+    if args.name is None:
+        model_path = Path(args.model)
+        # /path/to/runs/train/1104_yolov8n_ep100_.../weights/best.pt
+        # -> 1104_yolov8n_ep100_...
+        args.name = model_path.parent.parent.name
+        print(f"자동 추출된 폴더 이름: {args.name}")
     
     run_evaluation_and_visualization(
         model_path=args.model,

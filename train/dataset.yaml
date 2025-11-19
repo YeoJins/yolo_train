@@ -1,7 +1,7 @@
-train: /data/CRK/new_dataset/train_model/7subset_/train
-val: /data/CRK/new_dataset/train_model/7subset_/val
+train: /data/CRK/new_dataset/multi_test/1115_sam_test/train_diverse_fix
+val: /data/CRK/new_dataset/train_model/13subset_/val
 test: 
-nc: 8
+nc: 14
 names:
 - hand
 - chickenmayo
@@ -11,4 +11,10 @@ names:
 - pulmuone_spring_water
 - samdasoo
 - creeat_protein_bar
+- hotbar
+- egg
+- protein_shake
+- vita500
+- pizza_combination
+- protein_hatban
 
